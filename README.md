@@ -1,4 +1,4 @@
-# FedFFTNet_SCMI_FedLearn
+# Source Camera Model Identification via Federated Learning using Laplacian-based Patches
 
 This repository contains implementation of various **FedFFTNet** method for Source Camera Model Identification in Federated Learning Setup. The process involves two major phases:
 

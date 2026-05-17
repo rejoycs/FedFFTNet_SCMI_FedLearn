@@ -1,83 +1,228 @@
-# Source Camera Model Identification via Federated Learning using Laplacian-based Patches
+# 📸 Source Camera Model Identification via Federated Learning using Laplacian-based Patches
 
-This repository contains implementation of various **FedFFTNet** method for Source Camera Model Identification in Federated Learning Setup. The process involves two major phases:
+<div align="center">
 
-1. **Patching of Images**
-2. **Model Training**
+![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?style=for-the-badge&logo=pytorch)
+![Federated Learning](https://img.shields.io/badge/Federated-Learning-green?style=for-the-badge)
+![IEEE TAI](https://img.shields.io/badge/IEEE-TAI-orange?style=for-the-badge)
+<!-- ![Research](https://img.shields.io/badge/Research-Academic-purple?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Academic-lightgrey?style=for-the-badge) -->
 
-## 📁 Folder Structure
+</div>
 
-Ensure your dataset is pre-split into `train`, `test` folders in the following structure:
+---
 
+## 📖 Overview
+
+Official implementation of the paper:
+
+> **"Source Camera Model Identification via Federated Learning using Laplacian-based Patches"**  
+> Published in **IEEE Transactions on Artificial Intelligence (IEEE TAI)**.
+
+This work proposes a **Federated Learning (FL)** based framework for **Source Camera Model Identification (SCMI)** using **Laplacian-based image patches** and the proposed **FedFFTNet** architecture.
+
+The framework consists of:
+
+- 📌 Laplacian-based informative patch extraction
+- 🌐 Federated data distribution across clients
+- 🧠 Federated model training using FedFFTNet
+- 📷 Source Camera Model Identification
+
+---
+
+## 🔗 Paper
+
+📄 **Paper Link:**  
+[Source Camera Model Identification via Federated Learning using Laplacian-based Patches](#)
+
+---
+
+# 📂 Repository Workflow
+
+The complete pipeline consists of two major stages:
+
+```text
+Raw Images
+    │
+    ▼
+Laplacian-based Patch Extraction
+    │
+    ▼
+Federated Client Distribution
+    │
+    ▼
+FedFFTNet Training
+    │
+    ▼
+Source Camera Model Prediction
 ```
+
+---
+
+# 📁 Dataset Structure
+
+Ensure your dataset is pre-split into `train` and `test` folders.
+
+```text
 data/
 ├── train/
+│   ├── class_1/
+│   ├── class_2/
+│   └── ...
+│
 ├── test/
+│   ├── class_1/
+│   ├── class_2/
+│   └── ...
 ```
 
-## 🧩 Step 1: Image Patching
+---
 
-Laplacian based patching including distributing between global server and clients with a separated test dataset has been implemented.
+# 🧩 Step 1 — Laplacian-based Image Patching
 
-### ➤ Notebook: `Fed_DataSplit_Laplacian.ipynb`
+Notebook:
 
-**Hyperparameters**
+```text
+Fed_DataSplit_Laplacian.ipynb
+```
 
-| Variable      | Type | Default      | Description                                      |
-|---------------|------|--------------|--------------------------------------------------|
-| `datapath `       | str  | `./data`     | Source data directory                            |
-| `number_clients`      | int  | `5`  | Number of clients                    |
-| `initial_ratio`    | int  | `0.06`        | Globally available data ratio |
-| `dist_type` | str | `equal` | Data distribution : `equal`, `random`, `skew` |
+This notebook performs:
+
+- Laplacian-based informative patch extraction
+- Federated client data distribution
+- Global server data allocation
+- Test set generation
 
 ---
 
-### 🖼️ Patching Overview
+## ⚙️ Hyperparameters
+
+| Variable | Type | Default | Description |
+|---|---|---|---|
+| `datapath` | `str` | `./data` | Source dataset directory |
+| `number_clients` | `int` | `5` | Number of federated clients |
+| `initial_ratio` | `float` | `0.06` | Ratio of globally available data |
+| `dist_type` | `str` | `equal` | Data distribution type (`equal`, `random`, `skew`) |
+
+---
+
+## 🖼️ Patching Pipeline
+
+<div align="center">
+
+<img src="images/patching_method.png" alt="Patching Method" width="450"/>
+
+</div>
 
 <p align="center">
-  <img src="images/patching_method.png" alt="Patching Method" width="400"/>
+<b>Figure 1.</b> Laplacian-based patch extraction and federated data distribution.
 </p>
 
-*Figure 1: Laplacian-based image patching and distribution across clients.*
+---
+
+## 📦 Output Directory Structure
+
+After execution, the generated `patches/` directory should look like:
+
+```text
+patches/
+├── initial/
+├── clients/
+│   ├── client_1/
+│   ├── client_2/
+│   └── ...
+│
+└── test/
+```
 
 ---
 
-## 🧠 Step 2: Model Training
+# 🧠 Step 2 — Federated Model Training
 
-Once patching is complete, the resulting folder (e.g., `patches/`) should contain `initial` (if any) , `clients`, and `test` directories.
+Notebook:
 
-### ➤ Notebook: `FedLearn_FedFFTNet.ipynb`
+```text
+FedLearn_FedFFTNet.ipynb
+```
 
-### Configuration Parameters
+This notebook performs:
 
-| Variable           | Type   | Default       | Description                                             |
-|--------------------|--------|---------------|---------------------------------------------------------|
-| `root`             | str    | `./patches`   | Directory containing patched data                      |
-| `global_available` | bool   | `True`        | Indicates if global data is available                  |
-| `batchsize`        | int    | `128`         | Batch size for training                                |
-| `ROUNDS`           | int    | `100`         | Number of global communication rounds                  |
-| `CLIENT_EPOCHS`    | int    | `1`           | Number of local training epochs per client per round   |
-| `GLOBAL_EPOCHS`    | int    | `30`          | Number of global training epochs                       |
-| `learning_rate`    | float  | `0.001`       | Learning rate                                          |
-| `device`           | str    | `cuda:0`      | Device used for training (`cuda:i` or `cpu`) 
-
+- Federated training
+- Global aggregation
+- Local client optimization
+- Source Camera Model classification
 
 ---
 
-### 🧩 Model Architecture
+# ⚙️ Training Configuration
+
+| Variable | Type | Default | Description |
+|---|---|---|---|
+| `root` | `str` | `./patches` | Patched dataset directory |
+| `global_available` | `bool` | `True` | Availability of global server data |
+| `batchsize` | `int` | `128` | Training batch size |
+| `ROUNDS` | `int` | `100` | Number of communication rounds |
+| `CLIENT_EPOCHS` | `int` | `1` | Local client epochs per round |
+| `GLOBAL_EPOCHS` | `int` | `30` | Global server training epochs |
+| `learning_rate` | `float` | `0.001` | Optimizer learning rate |
+| `device` | `str` | `cuda:0` | Training device |
+
+---
+
+# 🏗️ FedFFTNet Architecture
+
+<div align="center">
+
+<img src="images/fedfft_model_architecture.png" alt="FedFFTNet Architecture" width="650"/>
+
+</div>
 
 <p align="center">
-  <img src="images/fedfft_model_architecture.png" alt="FedFFTNet Model Architecture" width="550"/>
+<b>Figure 2.</b> Proposed FedFFTNet architecture for federated SCMI.
 </p>
-
-*Figure 2: Overview of the proposed FedFFTNet architecture used for federated learning.*
 
 ---
 
-## ✅ Notes
+# 🚀 Running the Pipeline
 
-This code will be used for academic and research purpose only. Do cite the paper (Accepted on IEEE Transactions on Artificial Intelligence)
- if using the method:
+## Step 1 — Generate Patches
+
+Run:
+
+```bash
+Fed_DataSplit_Laplacian.ipynb
+```
+
+This creates the federated patch dataset.
+
+---
+
+## Step 2 — Train FedFFTNet
+
+Run:
+
+```bash
+FedLearn_FedFFTNet.ipynb
+```
+
+This starts federated training across all clients.
+
+---
+
+# 🧪 Supported Data Distribution Modes
+
+| Distribution | Description |
+|---|---|
+| `equal` | Equal data distribution across all clients |
+| `random` | Random client-wise data distribution |
+| `skew` | Non-IID skewed distribution |
+
+---
+
+# 📚 Citation
+
+If you use this work in your research, please cite:
 
 ```bibtex
 @article{chakraborty2025source,
@@ -87,5 +232,29 @@ This code will be used for academic and research purpose only. Do cite the paper
   year={2025},
   publisher={IEEE}
 }
+```
+
 ---
 
+# ⚠️ Disclaimer
+
+This repository is intended strictly for:
+
+- Academic research
+- Educational purposes
+- Experimental evaluation
+
+---
+
+# 👨‍💻 Authors
+
+- Rejoy Chakraborty
+- Puneet Goyal
+
+---
+
+# ⭐ Acknowledgement
+
+If you find this repository useful, consider giving it a ⭐ on GitHub.
+
+---

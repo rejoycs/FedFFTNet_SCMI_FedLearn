@@ -34,7 +34,7 @@ The framework consists of:
 ## 🔗 Paper
 
 📄 **Paper Link:**  
-[Source Camera Model Identification via Federated Learning using Laplacian-based Patches](#)
+[Source Camera Model Identification via Federated Learning using Laplacian-based Patches](https://ieeexplore.ieee.org/abstract/document/11229953)
 
 ---
 
